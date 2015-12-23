@@ -17,9 +17,9 @@ exports.execute_query = function(req, res, query) {
 
     connection.query(query,function(err,rows, fields){
               if (!err){
-                res.json({error : false, data : rows});      
+                res.json({status : true, data : rows});      
               }else{
-                res.status(500).json({error : true, data : err});   
+                res.status(500).json({status : false, data : err});   
               }
     });
 
