@@ -43,8 +43,8 @@ function header(req,res,next){
 
 app.use(header);
 
-app.use('/', routes);
-app.use('/', clients);
+app.use('/api', routes);
+app.use('/api', clients);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
