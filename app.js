@@ -8,6 +8,8 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var clients = require('./routes/clients');
 var stations = require('./routes/stations');
+var vehicules = require('./routes/vehicules');
+
 
 var app = express();
 
@@ -47,6 +49,7 @@ app.use(header);
 app.use('/api', routes);
 app.use('/api', clients);
 app.use('/api', stations);
+app.use('/api', vehicules);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
