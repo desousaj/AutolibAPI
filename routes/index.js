@@ -4,7 +4,7 @@ var db = require("../services/db.js");
 
 /* GET home page. */
 router.get('/', function (req, res) {
-    res.send("Page d'accueil");
+    res.send("Page d'accueil!");
 });
 
 
