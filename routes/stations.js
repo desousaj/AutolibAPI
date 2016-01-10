@@ -1,11 +1,13 @@
+var models  = require('../models');
 var express = require('express');
-var router = express.Router();
-var db = require("../services/db.js");
+var router  = express.Router();
 
-
-/* GET home page. */
-router.get('/stations', function (req, res) {
-    db.execute_query(req, res, "select * from station");
+router.get('/stations', function(req, res) {
+    models.Station.findAll({
+        attributes: ['idStation', 'latitude', 'longitude', 'adresse', 'numero', 'ville', 'code_postal']
+    }).then(function(data) {
+        res.json({status:true,data: data});
+    });
 });
 
 module.exports = router;
