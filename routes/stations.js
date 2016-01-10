@@ -4,7 +4,7 @@ var router  = express.Router();
 
 router.get('/stations', function(req, res) {
     models.Station.findAll({
-        attributes: ['idStation', 'latitude', 'longitude', 'adresse', 'numero', 'ville', 'code_postal']
+       // attributes: ['idStation', 'adresse']
     }).then(function(data) {
         res.json({status:true,data: data});
     });

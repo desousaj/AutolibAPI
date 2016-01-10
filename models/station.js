@@ -14,7 +14,9 @@ module.exports = function(sequelize, DataTypes) {
             ville: DataTypes.STRING(100),
             code_postal: DataTypes.INTEGER
     }, {
-            tableName: 'station'
+        timestamps: false,
+        freezeTableName: true,
+        tableName: 'station'
             /*
             classMethods: {
             // ICI, on défnit les relations avec les autre models!!
