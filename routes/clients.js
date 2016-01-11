@@ -1,15 +1,26 @@
+var models  = require('../models');
 var express = require('express');
-var router = express.Router();
-var db = require("../services/db.js");
+var router  = express.Router();
 
 
 /* GET home page. */
 router.get('/clients', function (req, res) {
-    db.execute_query(req, res, "select * from client");
+    models.Client.findAll({
+        // attributes: ['idStation', 'adresse']
+    }).then(function(data) {
+        res.json({status:true,data: data});
+    });
 });
 
 router.get('/client/:id', function (req, res) {
-    db.execute_query(req, res, "select * from client c where c.id = '" + req.params.id + "'");
+    // search for known ids
+    models.Client.findById(req.params.id).then(function(data) {
+        if(data != null || data != undefined){
+            res.json({status:true,data: data});
+        }else{
+            res.json({status:false,data: null});
+        }
+    });
 });
 
 router.post('/client', function (req, res) {
