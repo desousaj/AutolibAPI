@@ -12,7 +12,7 @@ router.get('/clients', function (req, res) {
     });
 });
 
-router.get('/client/:id', function (req, res) {
+router.get('/clients/:id', function (req, res) {
     // search for known ids
     models.Client.findById(req.params.id).then(function(data) {
         if(data != null || data != undefined){

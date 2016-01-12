@@ -2,7 +2,7 @@
 
 module.exports = function(sequelize, DataTypes) {
     var Client = sequelize.define("Client", {
-        id: {
+        idClient: {
             type :  DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true,
