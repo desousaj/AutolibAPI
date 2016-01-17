@@ -16,15 +16,13 @@ module.exports = function(sequelize, DataTypes) {
     }, {
         timestamps: false,
         freezeTableName: true,
-        tableName: 'station'
-            /*
-            classMethods: {
-            // ICI, on défnit les relations avec les autre models!!
+        tableName: 'station',
+        classMethods: {
              associate: function(models) {
-             User.hasMany(models.Task)
+                Station.hasMany(models.Borne, {foreignKey : 'station'})
              }
-             }
-             */
+        }
+
     });
 
     return Station;
