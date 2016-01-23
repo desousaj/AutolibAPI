@@ -11,33 +11,17 @@ module.exports = function(sequelize, DataTypes) {
         etatBatterie: DataTypes.INTEGER,
         Disponibilite: DataTypes.STRING(45),
         latitude: DataTypes.DECIMAL(9,6),
-        longitude: DataTypes.DECIMAL(9,6),
-        // type_vehicule: DataTypes.INTEGER,
+        longitude: DataTypes.DECIMAL(9,6)
     }, {
         timestamps: false,
         freezeTableName: true, // Model tableName will be the same as the model name
-        tableName: 'vehicule'
-        /*
-         classMethods: {
-         // ICI, on défnit les relations avec les autre models!!
-         associate: function(models) {
-         User.hasMany(models.Task)
-         }
-         }
-         */
-    }),
-
-    Type_vehicule = sequelize.define('Type_vehicule', {
-        id: {
-            type : DataTypes.INTEGER,
-            primaryKey: true,
-            autoIncrement: true,
-        },
-        categorie: DataTypes.STRING(45),
-        type_vehicule: DataTypes.STRING(45),
+        tableName: 'vehicule',
+        classMethods: {
+             associate: function(models) {
+                Vehicule.belongsTo(models.Type_vehicule, {foreignKey : 'type_vehicule', targetKey: 'idType_vehicule'})
+             }
+        }
     });
-
-    Vehicule.belongsTo(Type_vehicule, {foreignKey: 'type_vehicule'});
 
     return Vehicule;
 };
