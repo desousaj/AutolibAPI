@@ -7,11 +7,13 @@ router.get('/vehicules', function (req, res) {
 	if (req.query.dispo != undefined && (req.query.dispo.toUpperCase() == "LIBRE" || req.query.dispo.toUpperCase() == "OCCUPE")) {
         models.Vehicule.findAll({
             where: {Disponibilite: req.query.dispo.toUpperCase()},
+            include:[{model:models.Type_vehicule}]
         }).then(function(data) {
             res.json({status:true,data: data});
         });
     } else {
     	models.Vehicule.findAll({
+            include:[{model:models.Type_vehicule}]
     	}).then(function(data) {
            res.json({status:true,data: data});
        });
