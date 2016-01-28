@@ -4,11 +4,14 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var jwt = require('jsonwebtoken');
 
 var routes = require('./routes/index');
 var stations  = require('./routes/stations');
 var clients  = require('./routes/clients');
 var vehicules  = require('./routes/vehicules');
+var reservations  = require('./routes/reservations');
+var auth  = require('./routes/auth');
 
 var app = express();
 
@@ -48,6 +51,41 @@ app.use('/api', routes);
 app.use('/api', stations);
 app.use('/api', clients);
 app.use('/api', vehicules);
+app.use('/api', auth);
+
+// route middleware to verify a token
+app.use(function(req, res, next) {
+
+  // check header or url parameters or post parameters for token
+  var token = req.body.token || req.query.token || req.headers['x-access-token'];
+
+  // decode token
+  if (token) {
+    // verifies secret and checks exp
+    jwt.verify(token, 'gauffre', function(err, decoded) {
+      if (err) {
+        return res.json({ status: false, data: 'Failed to authenticate token.' });
+      } else {
+        // if everything is good, save to request for use in other routes
+        req.decoded = decoded;
+        next();
+      }
+    });
+
+  } else {
+    // if there is no token
+    // return an error
+    return res.status(403).send({
+      status: false,
+      data: 'No token provided.'
+    });
+  }
+});
+
+// Mettre ici les routes qui doivent etre proteger par le token d'authentification
+app.use('/api', reservations);
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
