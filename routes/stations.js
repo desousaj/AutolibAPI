@@ -4,6 +4,7 @@ var router  = express.Router();
 
 router.get('/stations', function(req, res) {
     models.Station.findAll({
+        include:[{model:models.Borne}]
     }).then(function(data) {
         res.json({status:true,data: data});
     });

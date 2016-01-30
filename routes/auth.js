@@ -4,7 +4,6 @@ var jwt = require ('jsonwebtoken');
 var router  = express.Router();
 
 router.post('/authenticate', function (req, res) {
-
     models.Client.findOne({
         where: {nom: req.body.login, prenom: req.body.password}
     }).then(function(data) {
