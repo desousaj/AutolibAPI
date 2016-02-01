@@ -24,12 +24,6 @@ router.get('/clients/:id', function (req, res) {
 });
 
 router.post('/client', function (req, res) {
-    console.log(req.body);
-    console.log("id : " + req.body.id);
-    res.send('Got a POST request');
-});
-
-router.put('/client', function (req, res) {
     var client1 = JSON.parse(JSON.stringify(req.body));
     models.Client.create({
         idClient: null,
@@ -42,6 +36,10 @@ router.put('/client', function (req, res) {
         console.log("finrenfr" + client);
         res.json({status: true, data: client});
     });
+});
+
+router.put('/client', function (req, res) {
+
 });
 
 router.delete('/client', function (req, res) {
