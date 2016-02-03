@@ -36,20 +36,23 @@ router.get('/vehicules/:id', function (req, res) {
 
 // Créer un nouveau véhicule
 router.post('/vehicules', function (req, res) {
-
+    var v = JSON.parse(JSON.stringify(req.body));
+    // console.log(v);
     models.Vehicule.create({
-        RFID: req.body.RFID,
-        etatBatterie: req.body.etatBatterie,
-        Disponibilite: req.body.Disponibilite,
-        latitude: req.body.latitude,
-        longitude: req.body.longitude,
-        type_vehicule: req.body.idType_vehicule
+        RFID: v.RFID,
+        etatBatterie: v.etatBatterie,
+        Disponibilite: v.Disponibilite,
+        latitude: v.latitude,
+        longitude: v.longitude,
+        type_vehicule: v.idType_vehicule
     },{
         fields: ['idVehicule', 'RFID', 'etatBatterie', 'Disponibilite', 'latitude', 'longitude', 'type_vehicule']
-    // }).then(function(vehicule){
-           // vehicule.setType_vehicule(models.Type_vehicule.findOne({where: {idType_vehicule: req.body.idType_vehicule}}));
     }).then(function() {
+        console.log("lala");
         res.json({status:true, data: 'Véhicule enregistré.'})
+    }).catch(function(e){
+        console.log("lolo");
+        res.json({status:false, data: 'Erreur: ' + e})
     });
 });
 

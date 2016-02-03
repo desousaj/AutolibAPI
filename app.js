@@ -10,6 +10,7 @@ var routes = require('./routes/index');
 var stations  = require('./routes/stations');
 var clients  = require('./routes/clients');
 var vehicules  = require('./routes/vehicules');
+var type_vehicules  = require('./routes/type_vehicules');
 var reservations  = require('./routes/reservations');
 var auth  = require('./routes/auth');
 
@@ -51,6 +52,7 @@ app.use('/api', routes);
 app.use('/api', stations);
 app.use('/api', clients);
 app.use('/api', vehicules);
+app.use('/api', type_vehicules);
 app.use('/api', auth);
 
 // route middleware to verify a token
