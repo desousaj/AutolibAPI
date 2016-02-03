@@ -34,13 +34,64 @@ router.get('/vehicules/:id', function (req, res) {
     });
 });
 
-/* Mettre un véhicule à jour (cela peut être utilisé pour changer son état, ou le niveau de sa batterie)
-	Faire une fonction pour chaque modification possible (position, batterie, disponibilité) ??
-    */
-//router.put('/vehicule/', function (req, res) {
-	//console.log(req)
-  //  db.execute_query(req, res, "update vehicule SET TRF_PETIT_DEJEUNE = TRF_PETIT_DEJEUNE * 1.15
-//where v.id = '" + req.params.id + "'");
-//});
+// Créer un nouveau véhicule
+router.post('/vehicules', function (req, res) {
+
+    models.Vehicule.create({
+        RFID: req.body.RFID,
+        etatBatterie: req.body.etatBatterie,
+        Disponibilite: req.body.Disponibilite,
+        latitude: req.body.latitude,
+        longitude: req.body.longitude,
+        type_vehicule: req.body.idType_vehicule
+    },{
+        fields: ['idVehicule', 'RFID', 'etatBatterie', 'Disponibilite', 'latitude', 'longitude', 'type_vehicule']
+    // }).then(function(vehicule){
+           // vehicule.setType_vehicule(models.Type_vehicule.findOne({where: {idType_vehicule: req.body.idType_vehicule}}));
+    }).then(function() {
+        res.json({status:true, data: 'Véhicule enregistré.'})
+    });
+});
+
+// Mettre un véhicule à jour (cela peut être utilisé pour changer son état, ou le niveau de sa batterie)
+router.put('/vehicules/:id', function (req, res) {
+
+    models.Vehicule.findOne({
+        where: {idVehicule: req.params.id},
+    }).then(function(v) {
+        if (v == null){
+            res.json({status:false,v: "Ce véhicule n'existe pas !! Entrez un id valide."});
+        }else{
+            v.update({
+                RFID: req.body.RFID,
+                etatBatterie: req.body.etatBatterie,
+                Disponibilite: req.body.Disponibilite,
+                latitude: req.body.latitude,
+                longitude: req.body.longitude,
+                type_vehicule: req.body.idType_vehicule
+            },{
+                fields: ['RFID', 'etatBatterie', 'Disponibilite', 'latitude', 'longitude', 'type_vehicule']
+            }).then(function() {
+                res.json({status:true, data: 'Véhicule enregistré.'})
+            });
+        }
+    });
+});
+
+// Supprimer un véhicule
+router.delete('/vehicules/:id', function (req, res) {
+
+    models.Vehicule.findOne({
+        where: {idVehicule: req.params.id},
+    }).then(function(v) {
+        if (v == null){
+            res.json({status:false,v: "Ce véhicule n'existe pas !! Entrez un id valide."});
+        }else{
+            v.destroy().then(function() {
+                res.json({status:true, data: 'Véhicule supprimé.'})
+            });
+        }
+    });
+});
 
 module.exports = router;
