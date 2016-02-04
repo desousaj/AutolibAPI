@@ -14,7 +14,7 @@ router.get('/vehicules', function (req, res) {
     } else {
     	models.Vehicule.findAll({
             include:[{model:models.Type_vehicule}]
-    	}).then(function(data) {
+        }).then(function(data) {
            res.json({status:true,data: data});
        });
     }
@@ -86,12 +86,22 @@ router.delete('/vehicules/:id', function (req, res) {
 
     models.Vehicule.findOne({
         where: {idVehicule: req.params.id},
+        include:[{model:models.Borne}]
     }).then(function(v) {
         if (v == null){
             res.json({status:false,v: "Ce véhicule n'existe pas !! Entrez un id valide."});
         }else{
-            v.destroy().then(function() {
-                res.json({status:true, data: 'Véhicule supprimé.'})
+            v.Borne.update({
+                etatBorne:true, //la borne devient libre
+                idVehicule:null
+            },{
+                fields: ['etatBorne', 'idVehicule']
+            }).then(function() {
+                v.destroy().then(function() {
+                    res.json({status:true, data: 'Véhicule supprimé.'})
+                });
+            }).catch(function(e){
+                res.json({status:false, data: 'Erreur sur la borne correspondante: ' + e})
             });
         }
     });

@@ -17,11 +17,12 @@ module.exports = function(sequelize, DataTypes) {
         freezeTableName: true, // Model tableName will be the same as the model name
         tableName: 'vehicule',
         classMethods: {
-             associate: function(models) {
-                Vehicule.belongsTo(models.Type_vehicule, {foreignKey : 'type_vehicule', targetKey: 'idType_vehicule'})
-             }
+           associate: function(models) {
+            Vehicule.belongsTo(models.Type_vehicule, {foreignKey : 'type_vehicule', targetKey: 'idType_vehicule'}),
+            Vehicule.hasOne(models.Borne, {foreignKey : 'idVehicule', targetKey: 'idVehicule'})
         }
-    });
+    }
+});
 
     return Vehicule;
 };
