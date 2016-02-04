@@ -6,7 +6,8 @@ var router = express.Router();
 /* GET home page. */
 router.get('/clients', function (req, res) {
     models.Client.findAll({
-        // attributes: ['idStation', 'adresse']
+        //attributes:{exclude: ['Reservations.id']},
+        include:[{model:models.Reservation}]
     }).then(function (data) {
         res.json({status: true, data: data});
     });

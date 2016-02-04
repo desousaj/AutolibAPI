@@ -13,15 +13,12 @@ module.exports = function(sequelize, DataTypes) {
     }, {
         timestamps: false,
         freezeTableName: true, // Model tableName will be the same as the model name
-        tableName: 'client'
-        /*
-         classMethods: {
-         // ICI, on défnit les relations avec les autre models!!
-         associate: function(models) {
-         User.hasMany(models.Task)
-         }
-         }
-         */
+        tableName: 'client',
+        classMethods: {
+            associate: function(models) {
+                Client.hasMany(models.Reservation, {foreignKey : 'client'})
+            }
+        }
     });
 
     return Client;

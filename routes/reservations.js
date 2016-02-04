@@ -2,13 +2,12 @@ var models  = require('../models');
 var express = require('express');
 var router  = express.Router();
 
-router.post('/reservations', function (req, res) {
-
-  console.log(req.decoded.idClient);
+router.get('/reservations', function (req, res) {
+ // console.log(req.decoded.idClient);
     var d = new Date();
 
     models.Reservation.create({
-        vehicule: req.body.idVehicule,
+        vehicule: req.query.idVehicule,
         client: req.decoded.idClient,
         date_reservation: d,
         date_echeance: new Date(d.getTime() + 1 *24*60*60*1000)
